@@ -1,0 +1,71 @@
+
+package ee.itcollege.hibernate.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "car")
+public class Car {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    private Long id;
+    
+    @Column(nullable = false)
+    private String make;
+    
+    @Column
+    private String model;
+    
+    @ManyToOne
+    private Driver driver;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    
+    @Override
+    public String toString() {
+        String driver = "none";
+        if (getDriver() != null) {
+            driver = getDriver().getFirstName();
+        }
+        return String.format("%d - %s - driver: %s", getId(), getMake(), driver);
+    }
+
+    public Driver getDriver() {
+        return driver;
+    }
+
+    public void setDriver(Driver driver) {
+        this.driver = driver;
+    }
+
+    public String getMake() {
+        return make;
+    }
+
+    public void setMake(String make) {
+        this.make = make;
+    }
+
+	public String getModel() {
+		return model;
+	}
+
+	public void setModel(String model) {
+		this.model = model;
+	}
+    
+}

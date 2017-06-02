@@ -1,0 +1,54 @@
+package ee.itcollege.hibernate;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
+import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+
+import ee.itcollege.hibernate.entity.Shop;
+import ee.itcollege.hibernate.entity.Product;
+
+public class ShopManager {
+    
+    static EntityManager em;
+
+    public static void main(String[] args) {
+    	
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("test1");
+        em = entityManagerFactory.createEntityManager();
+        
+        while (true) {            
+            System.out.println("\nPlease choose:");
+            System.out.println("1 - list cars");
+            System.out.println("2 - list drivers");
+            System.out.println("3 - add car and driver");
+            System.out.println("4 - any other number to exit");
+            
+            int selection = TextIO.getlnInt();
+            
+            em.getTransaction().begin();
+            
+            switch (selection) {
+                case 1: listCars(); break;
+                case 2: listDrivers(); break;
+                case 3: addCar(); break;
+                default: em.close(); return;
+            }            
+           
+            em.getTransaction().commit();
+        }
+        
+        
+    }
+    
+    public static void createDemoData() {
+    	Shop shop = new Shop();
+    	shop.setName("Walmark");
+    	Product product = new Product();
+    	product.setShop(shop);
+    }
+
+}

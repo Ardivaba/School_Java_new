@@ -1,0 +1,101 @@
+package ee.itcollege.hibernate;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
+import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+
+import ee.itcollege.hibernate.entity.Shop;
+import ee.itcollege.hibernate.entity.Product;
+
+public class HibernateJPAExample {
+    
+    static EntityManager em;    
+    
+    public static void listDrivers() {
+        List<Product> drivers = em.createQuery("from Driver", Product.class).getResultList();
+        for (Product driver : drivers) {
+            System.out.println(driver);
+        }
+        System.out.println();
+    }
+    
+    public static void listCars() {
+        List<Shop> list = em.createQuery("select c from Car c order by c.id", Shop.class).getResultList();
+        
+        for (Shop car : list) {
+            System.out.println(car);
+        }
+        System.out.println();
+    }
+    
+    public static void addCar() {
+        System.out.println("What is the make of the car?");
+        String make = TextIO.getlnString();
+        
+        Shop car = new Shop();
+        car.setMake(make);
+        
+        System.out.println("What is the name of the driver?");
+        String driverName = TextIO.getlnString();
+        
+        TypedQuery<Product> query =
+        		em.createQuery("from Driver where firstName like(:name)", Product.class);
+        
+        query.setParameter("name", driverName);
+        query.setMaxResults(1);
+        Product driver = null;
+        
+        try {
+			driver = query.getSingleResult();
+			System.out.println("Do you want to use the same driver (y/n): " + driver);
+			String input = TextIO.getlnString().toLowerCase();
+			if (input.charAt(0) != 'y') {
+				driver = null;
+			}
+		} catch (NoResultException e) {}
+        
+        if (driver == null) {
+	        driver = new Product();
+	        driver.setFirstName(driverName);
+        }
+        
+        car.setDriver(driver);
+        // saves
+        em.persist(driver);
+        em.persist(car);
+    }
+
+    public static void main(String[] args) {
+    	
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("test1");
+        em = entityManagerFactory.createEntityManager();
+        
+        while (true) {            
+            System.out.println("\nPlease choose:");
+            System.out.println("1 - list cars");
+            System.out.println("2 - list drivers");
+            System.out.println("3 - add car and driver");
+            System.out.println("4 - any other number to exit");
+            
+            int selection = TextIO.getlnInt();
+            
+            em.getTransaction().begin();
+            
+            switch (selection) {
+                case 1: listCars(); break;
+                case 2: listDrivers(); break;
+                case 3: addCar(); break;
+                default: em.close(); return;
+            }            
+           
+            em.getTransaction().commit();
+        }
+        
+        
+    }
+
+}

@@ -1,0 +1,26 @@
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+import entity.Store;
+
+public class DatabaseSearch {
+
+	private static EntityManager entityManager;
+	
+	public static void main(String[] args) {
+		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("headlines");
+		entityManager = entityManagerFactory.createEntityManager();
+		
+		createStores();
+	}
+	
+	public static void createStores() {
+		Store store = new Store();
+		store.setName("Walmart");
+		entityManager.persist(store);
+		
+		System.out.println("Created stores");
+	}
+
+}

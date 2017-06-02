@@ -1,0 +1,55 @@
+package ee.itcollege.hibernate;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
+import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+
+import ee.itcollege.hibernate.entity.Shop;
+import ee.itcollege.hibernate.entity.Product;
+
+public class ShopManager {
+    
+    static EntityManager em;
+
+    public static void main(String[] args) {
+    	
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("test1");
+        em = entityManagerFactory.createEntityManager();
+        
+        createDemoData();
+        
+        listShops();
+    }
+    
+    public static void listShops() {
+    	List<Shop> shops = em.createQuery("select s from Shop s order by s.id", Shop.class).getResultList();
+    	
+    	for(Shop shop : shops) {
+    		System.out.println(shop);
+    	}
+    	
+    }
+    
+    public static void createDemoData() {
+    	em.getTransaction().begin();
+    	
+    	Shop shop = new Shop();
+    	shop.setId((long) 1);
+    	shop.setName("Walmart");
+    	
+    	Product product = new Product();
+    	product.setId((long) (1));
+    	product.setName("Apple");
+    	product.setShop(shop);
+    	
+    	em.persist(shop);
+    	em.persist(product);
+    	
+    	em.getTransaction().commit();
+    }
+
+}

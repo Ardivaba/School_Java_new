@@ -1,0 +1,91 @@
+package ee.itcollege.hibernate;
+
+import java.util.List;
+
+import static org.hibernate.criterion.Restrictions.*;
+
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import ee.itcollege.hibernate.entity.Shop;
+import ee.itcollege.hibernate.entity.Product;
+
+public class HibernateStraightUsageExample {
+    
+    static Session session;
+    
+    @SuppressWarnings("unchecked")
+    public static void listDrivers() {
+        Criteria criteria = session.createCriteria(Product.class);
+        
+        criteria.add(ilike("firstName", "Tom"));
+        
+		List<Product> drivers = criteria.list();
+        for (Product driver : drivers) {
+            System.out.println(driver);
+        }
+        System.out.println();
+    }
+    
+    @SuppressWarnings("unchecked")
+    public static void listCars() {
+        List<Shop> list = session.createQuery("select d from Car d order by d.id").list();
+       
+        for (Shop car : list) {
+            System.out.println(car);
+        }
+        System.out.println();
+    }
+    
+    public static void addCar() {
+        System.out.println("What is the make of the car?");
+        String make = TextIO.getlnString();
+        
+        Shop car = new Shop();
+        car.setMake(make);
+        
+        System.out.println("What is the name of the driver?");
+        String driverName = TextIO.getlnString();
+        
+        Product driver = new Product();
+        driver.setFirstName(driverName);
+        car.setDriver(driver);
+        
+        // saves
+        session.persist(driver);
+        session.persist(car);
+    }
+
+    public static void main(String[] args) {
+        
+        session = HibernateUtil.getSessionFactory().openSession();
+        
+        
+        while (true) {            
+            System.out.println("\nPlease choose:");
+            System.out.println("1 - list cars");
+            System.out.println("2 - list drivers");
+            System.out.println("3 - add car and driver");
+            System.out.println("4 - any other number to exit");
+            
+            int selection = TextIO.getlnInt();
+            
+            Transaction transaction = session.beginTransaction();
+            
+            switch (selection) {
+                case 1: listCars(); break;
+                case 2: listDrivers(); break;
+                case 3: addCar(); break;
+                default: session.close(); return;
+            }            
+           
+            transaction.commit();
+        }
+        
+        
+    }
+
+    
+
+}

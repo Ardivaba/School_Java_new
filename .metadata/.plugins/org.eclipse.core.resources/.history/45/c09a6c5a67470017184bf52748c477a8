@@ -1,0 +1,64 @@
+package ee.itcollege.hibernate;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+
+import ee.itcollege.hibernate.entity.Shop;
+import ee.itcollege.hibernate.entity.Product;
+
+public class ShopManager {
+    
+    static EntityManager em;
+
+    public static void main(String[] args) {
+    	
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("test1");
+        em = entityManagerFactory.createEntityManager();
+        
+        createDemoData();
+        
+        listShopsAndTheirProducts();
+    }
+    
+    public static void listShopsAndTheirProducts() {
+    	List<Shop> shops = em.createQuery("select s from Shop s order by s.id", Shop.class).getResultList();
+    	
+    	for(Shop shop : shops) {
+    		System.out.print("Shop name: ");
+    		System.out.println(shop);
+    		Query query = em.createQuery("select p from Product p where shop = :shop", Product.class);
+    		query.setParameter("shop", shop);
+    		
+    		System.out.println("Products:");
+    		List<Product> products = query.getResultList();
+    		
+    		for(Product product : products) {
+    			System.out.println("\t" + product.getName());
+    		}
+    	}
+    	
+    }
+    
+    public static void createDemoData() {
+    	em.getTransaction().begin();
+    	
+    	Shop shop = new Shop();
+    	shop.setName("Walmart");
+    	
+    	em.persist(shop);
+    	
+    	Product product = new Product();
+    	product.setName("Apple");
+    	product.setShop(shop);
+    	em.persist(product);
+    	
+    	em.getTransaction().commit();
+    }
+
+}
