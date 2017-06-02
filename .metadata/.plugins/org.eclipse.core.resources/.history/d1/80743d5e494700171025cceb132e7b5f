@@ -1,0 +1,100 @@
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Date;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import com.google.gson.Gson;
+
+
+public class Headlines {
+
+	private static Gson gson;
+	private static ArrayList<HeadlineEntry> headlineEntries;
+	
+	private static FileWriter fw = null; 
+	private static BufferedWriter bw = null; 
+	private static PrintWriter pw = null;
+	
+	public static void main(String[] args) throws IOException {
+		gson = new Gson();
+		fw = new FileWriter("headlines.txt", true); 
+		bw = new BufferedWriter(fw);
+		pw = new PrintWriter(bw);
+		headlineEntries = new ArrayList<HeadlineEntry>();
+		
+		try {
+			Document document = getDocument("http://rust.facepunch.com/blog/");
+			headlineEntries = loadHeadlineEntries("headlines.txt");
+			headlineEntries = findHeadlines(document);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static ArrayList<HeadlineEntry> loadHeadlineEntries(String filePath) throws IOException {
+		ArrayList<HeadlineEntry> entries = new ArrayList<HeadlineEntry>();
+		
+		File file = new File(filePath);
+		
+		file.createNewFile();
+		FileReader reader = new FileReader(filePath);
+		
+		gson.fromJson(reader, HeadlineEntry.class);
+		
+		return entries;
+	}
+	
+	public static ArrayList<HeadlineEntry> findHeadlines(Document document) throws IOException {
+		ArrayList<HeadlineEntry> entries = new ArrayList<HeadlineEntry>();
+		
+		Elements headlines = document.select(".hero-body");
+		
+		for(Element headline : headlines) {
+			String title = headline.select(".title").html();
+			String url = headline.absUrl("href");
+			
+			HeadlineEntry headlineEntry = new HeadlineEntry();
+			headlineEntry.date = new Date();
+			headlineEntry.url = url;
+			headlineEntry.title = title;
+			
+			if(!headlineEntries.contains(headlineEntry)) {
+				entries.add(headlineEntry);
+				System.out.println("Found new headline: " + headlineEntry.title);
+				storeNewHeadlineEntry(headlineEntry);
+			}
+		}
+		
+		return entries;
+	}
+	
+	public static void storeNewHeadlineEntry(HeadlineEntry entry) throws IOException {
+		File file = new File("headlines.txt");
+		if (!file.exists()) {
+			file.createNewFile();
+		}
+		
+		pw.println(gson.toJson(entry));
+	}
+	
+	public static Document getDocument(String url) throws IOException {
+		return Jsoup.connect(url)
+				.timeout(4000)
+				.userAgent(
+						"Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36")
+				.referrer("http://www.google.com")
+				.get();
+	}
+
+}

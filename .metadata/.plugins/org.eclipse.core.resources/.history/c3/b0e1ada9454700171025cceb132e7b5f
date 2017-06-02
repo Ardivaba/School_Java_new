@@ -1,0 +1,64 @@
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import com.google.gson.Gson;
+
+
+public class Headlines {
+
+	private static Gson gson;
+	ArrayList<HeadlineEntry> headlines;
+	
+	public static void main(String[] args) {
+		gson = new Gson();
+		
+		try {
+			Document document = getDocument("http://rust.facepunch.com/blog/");
+			loadHeadlines("headlines.txt");
+			findHeadlines(document);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void loadHeadlines() {
+		
+	}
+	
+	public static ArrayList<HeadlineEntry> findHeadlines(Document document) {
+		ArrayList<HeadlineEntry> entries = new ArrayList<HeadlineEntry>();
+		
+		Elements headlines = document.select(".hero-body");
+		
+		for(Element headline : headlines) {
+			String title = headline.select(".title").html();
+			String url = headline.absUrl("href");
+			
+			HeadlineEntry headlineEntry = new HeadlineEntry();
+			headlineEntry.date = new Date();
+			headlineEntry.url = url;
+			headlineEntry.title = title;
+			
+			entries.add(headlineEntry);
+		}
+		
+		return entries;
+	}
+	
+	public static Document getDocument(String url) throws IOException {
+		return Jsoup.connect(url)
+				.timeout(4000)
+				.userAgent(
+						"Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36")
+				.referrer("http://www.google.com")
+				.get();
+	}
+
+}

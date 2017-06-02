@@ -1,0 +1,40 @@
+import java.io.IOException;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+
+public class Headlines {
+
+	public static void main(String[] args) {
+		try {
+			Document document = getDocument("http://rust.facepunch.com/blog/");
+			findHeadlines(document);
+			System.out.println("Done");
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void findHeadlines(Document document) {
+		Elements headlines = document.select("title is-3");
+		
+		System.out.println(headlines.size());
+		for(Element headline : headlines) {
+			System.out.println(headline.html());
+		}
+	}
+	
+	public static Document getDocument(String url) throws IOException {
+		return Jsoup.connect(url)
+				.timeout(4000)
+				.userAgent(
+						"Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36")
+				.referrer("http://www.google.com")
+				.get();
+	}
+
+}

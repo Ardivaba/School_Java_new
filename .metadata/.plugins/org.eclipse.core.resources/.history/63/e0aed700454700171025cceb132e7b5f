@@ -1,0 +1,47 @@
+import java.io.IOException;
+import java.util.Date;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+
+public class Headlines {
+
+	public static void main(String[] args) {
+		try {
+			Document document = getDocument("http://rust.facepunch.com/blog/");
+			findHeadlines(document);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void findHeadlines(Document document) {
+		Elements headlines = document.select(".hero-body");
+		
+		for(Element headline : headlines) {
+			String title = headline.select(".title").html();
+			String url = headline.absUrl("href");
+			
+			HeadlineEntry headlineEntry = new HeadlineEntry();
+			headlineEntry.date = new Date();
+			headlineEntry.url = url;
+			headlineEntry.title = title;
+			
+			
+		}
+	}
+	
+	public static Document getDocument(String url) throws IOException {
+		return Jsoup.connect(url)
+				.timeout(4000)
+				.userAgent(
+						"Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36")
+				.referrer("http://www.google.com")
+				.get();
+	}
+
+}
