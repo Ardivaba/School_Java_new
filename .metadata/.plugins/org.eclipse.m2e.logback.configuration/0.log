@@ -934,3 +934,16 @@
 2017-06-02 07:26:26,874 [Worker-21] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\Java\Headlines\src\main\resources
 2017-06-02 07:26:26,875 [Worker-21] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1257 actually) to copy filtered resources, i.e. build is platform dependent!
 2017-06-02 07:26:26,876 [Worker-21] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\Java\Headlines\src\test\resources
+2017-06-02 07:29:24,793 [Worker-14] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1257 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-06-02 07:29:24,793 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\Java\Headlines\src\main\resources
+2017-06-02 07:29:24,794 [Worker-14] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1257 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-06-02 07:29:24,794 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\Java\Headlines\src\test\resources
+2017-06-02 07:39:47,313 [Worker-23] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1257 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-06-02 07:39:47,314 [Worker-23] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\Java\Headlines\src\main\resources
+2017-06-02 07:39:47,318 [Worker-23] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1257 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-06-02 07:39:47,320 [Worker-23] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\Java\Headlines\src\test\resources
+2017-06-02 07:39:48,379 [Worker-20] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1257 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-06-02 07:39:48,380 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\Java\Headlines\src\main\resources
+2017-06-02 07:39:48,383 [Worker-20] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1257 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-06-02 07:39:48,386 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\Java\Headlines\src\test\resources
+2017-06-02 07:40:25,441 [Worker-1] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
