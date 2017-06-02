@@ -1,0 +1,28 @@
+import java.util.ArrayList;
+import java.util.function.Predicate;
+
+public class Lambdas {
+
+	public static void main(String[] args) {
+		print("Names that start with A", e -> e.startsWith("A"), "Mati", "Kati", "Aadu");
+		print("Values that are greater than ten", e -> e > 10, 40, 0, 4, -5, -14, 35, 1, 5, 6, 7, 8);
+	}
+
+	public static <T> void print(String question, Predicate<T> pred, T... array) {
+		ArrayList<T> matches = new ArrayList<T>();
+		for(T value : array) {
+			if(pred.test(value)) {
+				matches.add(value);
+			}
+		}
+		
+		if(matches.size() < 1) {
+			System.out.println("No matches.");
+		} else {
+			System.out.println(":");
+			for(T match : matches) {
+				System.out.print(match + " ");
+			}
+		}
+	}
+}

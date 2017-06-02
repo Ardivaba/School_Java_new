@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;pred&apos; in &apos;Lambdas.print(...)&apos; to &apos;predicate&apos;&#x0D;&#x0A;- Original project: &apos;Homework5&apos;&#x0D;&#x0A;- Original element: &apos;Lambdas.print(String, Predicate&lt;T&gt;, T...).pred&apos;&#x0D;&#x0A;- Renamed element: &apos;pred&apos;&#x0D;&#x0A;- Update references to refactored element" description="Rename local variable &apos;pred&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src&lt;{Lambdas.java[Lambdas~print~QString;~QPredicate\&lt;QT;&gt;;~\[QT;@pred!562!578!575!578!QPredicate\&lt;QT;&gt;;!0!true" name="predicate" references="true" stamp="1496379470028" version="1.0"/>
+</session>
