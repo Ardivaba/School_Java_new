@@ -7,7 +7,7 @@ public class TetrisBlocks {
 		
 		List<int[][]> blocks = new ArrayList<int[][]>();
 		
-		while(blocks.size() < 1) {
+		while(blocks.size() < 50) {
 			try {
 				int[][] randomBlock = generateRandomTetrisBlock();
 				if(!blocks.contains(randomBlock)) {
@@ -43,40 +43,34 @@ public class TetrisBlocks {
 			
 			int[] piece = new int[]{ x, y };
 			
-			boolean found = false;
-			for(int[] existingPiece : block) {
-				if(existingPiece[0] == piece[0] && existingPiece[1] == piece[1])
-					found = true;
-			}
-			if(!found) {
-				
+			if(!block.contains(piece)) {
 				block.add(piece);
 				counter += 1;
 			}
 		}
 		
 		int[][] t = new int[][] {
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0 }
+			{ 0, 0, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0, 0 }
 		};
 		
 		for(int[] coords : block) {
 			t[coords[0]][coords[1]] = 1;
 		}
 		
-		return t;	
+		return t;
 	}
 	
 	public static void printBlock(int[][] block) {
-		for(int x = 0; x < 9; x++) {
-			for(int y = 0; y < 9; y++) {
+		for(int x = 0; x < 6; x++) {
+			for(int y = 0; y < 6; y++) {
 				if(block[x][y] > 0)
 					System.out.print(block[x][y]);
 				else

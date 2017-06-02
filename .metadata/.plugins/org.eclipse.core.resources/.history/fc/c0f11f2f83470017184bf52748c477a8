@@ -55,6 +55,10 @@ public class TetrisBlocks {
 			}
 		}
 		
+		for(int[] b : block) {
+			System.out.println(b[0] + ":" + b[1]);
+		}
+		
 		int[][] t = new int[][] {
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0 },

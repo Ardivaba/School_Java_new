@@ -43,16 +43,16 @@ public class TetrisBlocks {
 			
 			int[] piece = new int[]{ x, y };
 			
-			boolean found = false;
-			for(int[] existingPiece : block) {
-				if(existingPiece[0] == piece[0] && existingPiece[1] == piece[1])
-					found = true;
-			}
-			if(!found) {
+			System.out.println(piece.toString());
+			if(!block.contains(piece)) {
 				
 				block.add(piece);
 				counter += 1;
 			}
+		}
+		
+		for(int[] b : block) {
+			System.out.println(b[0] + ":" + b[1]);
 		}
 		
 		int[][] t = new int[][] {

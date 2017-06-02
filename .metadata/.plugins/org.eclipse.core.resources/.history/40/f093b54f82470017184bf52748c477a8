@@ -7,7 +7,7 @@ public class TetrisBlocks {
 		
 		List<int[][]> blocks = new ArrayList<int[][]>();
 		
-		while(blocks.size() < 1) {
+		while(blocks.size() < 50) {
 			try {
 				int[][] randomBlock = generateRandomTetrisBlock();
 				if(!blocks.contains(randomBlock)) {
@@ -43,13 +43,7 @@ public class TetrisBlocks {
 			
 			int[] piece = new int[]{ x, y };
 			
-			boolean found = false;
-			for(int[] existingPiece : block) {
-				if(existingPiece[0] == piece[0] && existingPiece[1] == piece[1])
-					found = true;
-			}
-			if(!found) {
-				
+			if(!block.contains(piece)) {
 				block.add(piece);
 				counter += 1;
 			}

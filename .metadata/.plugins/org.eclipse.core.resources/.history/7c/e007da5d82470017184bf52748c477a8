@@ -43,13 +43,7 @@ public class TetrisBlocks {
 			
 			int[] piece = new int[]{ x, y };
 			
-			boolean found = false;
-			for(int[] existingPiece : block) {
-				if(existingPiece[0] == piece[0] && existingPiece[1] == piece[1])
-					found = true;
-			}
-			if(!found) {
-				
+			if(!block.contains(piece)) {
 				block.add(piece);
 				counter += 1;
 			}
